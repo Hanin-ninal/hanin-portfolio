@@ -1,0 +1,781 @@
+
+/* =========================================
+   1. GLOBAL SETTINGS
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    position: relative;
+    isolation: isolate;
+    overflow-x: hidden;
+
+    background: linear-gradient(
+        135deg,
+        #dff4ff,
+        #91cbea,
+        #c5eaff,
+        #eaf8ff
+    );
+
+    background-size: 300% 300%;
+    animation: skyMovement 14s ease infinite;
+    transition: background 0.8s ease;
+}
+
+/* =========================================
+   2. BACKGROUND LIGHT EFFECTS
+========================================= */
+
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    filter: blur(75px);
+    opacity: 0.45;
+    z-index: -1;
+    pointer-events: none;
+
+    animation: floatingLights 12s ease-in-out infinite alternate;
+}
+
+body::before {
+    background: #ffffff;
+    top: -130px;
+    left: -120px;
+}
+
+body::after {
+    background: #69bce8;
+    bottom: -130px;
+    right: -120px;
+    animation-delay: 3s;
+}
+
+/* =========================================
+   3. MAIN CONTAINER
+========================================= */
+
+.container {
+    width: 90%;
+    max-width: 470px;
+    padding: 32px;
+    text-align: center;
+
+    background: rgba(255, 255, 255, 0.90);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 25px;
+
+    box-shadow:
+        0 20px 50px rgba(35, 91, 125, 0.16),
+        0 5px 15px rgba(255, 255, 255, 0.3);
+
+    animation: fadeIn 0.8s ease;
+}
+
+/* =========================================
+   4. HEADER
+========================================= */
+
+.header {
+    margin-bottom: 28px;
+}
+
+.brand-icon {
+    font-size: 36px;
+    margin-bottom: 8px;
+}
+
+.header h1 {
+    color: #173b59;
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #8199a9;
+    font-size: 13px;
+}
+
+/* =========================================
+   5. SEARCH SECTION
+========================================= */
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 13px;
+}
+
+input {
+    flex: 1;
+    min-width: 0;
+    padding: 13px;
+
+    border: 1px solid #c8dce8;
+    border-radius: 10px;
+
+    font-size: 14px;
+    outline: none;
+
+    background: #f8fcff;
+    color: #173b59;
+
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: #368fc4;
+    box-shadow: 0 0 0 4px rgba(54, 143, 196, 0.12);
+    background: #ffffff;
+}
+
+input::placeholder {
+    color: #9aafbd;
+}
+
+/* =========================================
+   6. BUTTONS
+========================================= */
+
+button {
+    padding: 12px 17px;
+
+    background: #368fc4;
+    color: white;
+
+    border: none;
+    border-radius: 10px;
+
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: all 0.3s ease;
+}
+
+button:hover:not(:disabled) {
+    background: #246f9f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(36, 111, 159, 0.2);
+}
+
+button:active:not(:disabled) {
+    transform: scale(0.97);
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+/* Location Button */
+
+#locationButton {
+    width: 100%;
+    margin-bottom: 25px;
+    padding: 13px;
+
+    background: #eaf6fc;
+    color: #246f9f;
+
+    border: 1px solid #c8e5f4;
+    border-radius: 11px;
+
+    font-size: 14px;
+}
+
+#locationButton:hover:not(:disabled) {
+    background: #368fc4;
+    color: white;
+}
+
+/* =========================================
+   7. WEATHER INFORMATION
+========================================= */
+
+.weather-info {
+    color: #173b59;
+    animation: slideUp 0.7s ease;
+}
+
+.location-heading h2 {
+    font-size: 23px;
+    color: #173b59;
+    margin-bottom: 7px;
+}
+
+#lastUpdated {
+    font-size: 12px;
+    color: #849ba9;
+}
+
+/* =========================================
+   8. MAIN WEATHER
+========================================= */
+
+.main-weather {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 22px;
+    margin: 25px 0;
+}
+
+.weather-icon {
+    font-size: 76px;
+    animation: iconFloat 3s ease-in-out infinite;
+}
+
+.temperature-area {
+    text-align: left;
+}
+
+#temperature {
+    font-size: 53px;
+    color: #246f9f;
+    font-weight: 700;
+}
+
+#description {
+    font-size: 17px;
+    color: #52758b;
+    margin-top: 5px;
+}
+
+#feelsLikeText {
+    font-size: 13px;
+    color: #849ba9;
+    margin-top: 8px;
+}
+
+/* =========================================
+   9. MAXIMUM AND MINIMUM TEMPERATURE
+========================================= */
+
+.temperature-range {
+    display: flex;
+    justify-content: center;
+    gap: 35px;
+
+    padding: 17px 10px;
+    margin-bottom: 20px;
+
+    background: #f2f9fd;
+    border-radius: 14px;
+}
+
+.range-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    text-align: left;
+}
+
+.range-item > span {
+    font-size: 23px;
+    color: #368fc4;
+    font-weight: bold;
+}
+
+.range-item div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.range-item small {
+    font-size: 11px;
+    color: #8199a9;
+}
+
+.range-item strong {
+    color: #173b59;
+    font-size: 15px;
+}
+
+/* =========================================
+   10. WEATHER DETAILS
+========================================= */
+
+.details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 13px;
+}
+
+.detail-card {
+    padding: 17px 10px;
+
+    background: #f5faff;
+    border: 1px solid #e2f0f8;
+    border-radius: 15px;
+
+    transition: all 0.3s ease;
+}
+
+.detail-card:hover {
+    transform: translateY(-4px);
+    background: #eaf6fc;
+}
+
+.detail-icon {
+    display: block;
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.detail-card p {
+    color: #8199a9;
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+.detail-card strong {
+    color: #246f9f;
+    font-size: 17px;
+}
+
+/* =========================================
+   11. FOOTER
+========================================= */
+
+.footer {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #e2edf3;
+}
+
+.footer p {
+    font-size: 10px;
+    color: #9aafbd;
+    margin-bottom: 5px;
+}
+
+/* =========================================
+   12. DYNAMIC WEATHER BACKGROUNDS
+========================================= */
+
+/* SUNNY */
+
+body.sunny {
+    background: linear-gradient(
+        135deg,
+        #ffe7a3,
+        #ffbd80,
+        #fff1c9,
+        #ffd78e
+    );
+
+    background-size: 300% 300%;
+}
+
+body.sunny::before {
+    background: #fff9dc;
+    opacity: 0.65;
+}
+
+body.sunny::after {
+    background: #ffcf70;
+}
+
+/* CLOUDY */
+
+body.cloudy {
+    background: linear-gradient(
+        135deg,
+        #dce5ed,
+        #9fb4c5,
+        #e8edf2,
+        #b7c9d6
+    );
+
+    background-size: 300% 300%;
+}
+
+body.cloudy::before {
+    background: #ffffff;
+}
+
+body.cloudy::after {
+    background: #9eafc1;
+}
+
+/* RAINY */
+
+body.rainy {
+    background: linear-gradient(
+        135deg,
+        #7894aa,
+        #405d76,
+        #a1b7c8,
+        #526f89
+    );
+
+    background-size: 300% 300%;
+}
+
+body.rainy::before {
+    background: #b9d4e6;
+    opacity: 0.35;
+}
+
+body.rainy::after {
+    width: 100%;
+    height: 100%;
+
+    top: 0;
+    left: 0;
+    bottom: auto;
+    right: auto;
+
+    border-radius: 0;
+    filter: none;
+    opacity: 0.5;
+
+    background: repeating-linear-gradient(
+        105deg,
+        transparent 0px,
+        transparent 35px,
+        rgba(220, 240, 255, 0.35) 36px,
+        transparent 38px
+    );
+
+    animation: rainFall 0.8s linear infinite;
+}
+
+/* SNOWY */
+
+body.snowy {
+    background: linear-gradient(
+        135deg,
+        #e5f5ff,
+        #a9d8f0,
+        #ffffff,
+        #c4eaff
+    );
+
+    background-size: 300% 300%;
+}
+
+body.snowy::before {
+    background: #ffffff;
+}
+
+body.snowy::after {
+    width: 100%;
+    height: 100%;
+
+    top: 0;
+    left: 0;
+    bottom: auto;
+    right: auto;
+
+    border-radius: 0;
+    filter: none;
+    opacity: 0.8;
+
+    background-image:
+        radial-gradient(circle, white 2px, transparent 3px),
+        radial-gradient(circle, rgba(255,255,255,0.8) 3px, transparent 4px),
+        radial-gradient(circle, white 1.5px, transparent 2.5px);
+
+    background-size: 90px 100px, 130px 150px, 70px 80px;
+
+    animation: snowFall 7s linear infinite;
+}
+
+/* =========================================
+   13. WEATHER ANIMATIONS
+========================================= */
+
+@keyframes skyMovement {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes floatingLights {
+    from {
+        transform: translate(0, 0) scale(1);
+    }
+
+    to {
+        transform: translate(45px, 35px) scale(1.2);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes iconFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes rainFall {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: -30px 100px;
+    }
+}
+
+@keyframes snowFall {
+    from {
+        background-position: 0 0, 40px 30px, 20px 50px;
+    }
+
+    to {
+        background-position: 40px 300px, 100px 400px, -20px 250px;
+    }
+}
+
+/* Sunny Glow */
+
+body.sunny::before {
+    width: 300px;
+    height: 300px;
+
+    background: radial-gradient(
+        circle,
+        rgba(255, 255, 220, 0.95) 0%,
+        rgba(255, 218, 120, 0.65) 35%,
+        rgba(255, 190, 90, 0.15) 70%,
+        transparent 100%
+    );
+
+    filter: blur(15px);
+    opacity: 0.9;
+
+    animation: sunGlow 5s ease-in-out infinite alternate;
+}
+
+@keyframes sunGlow {
+    from {
+        transform: scale(0.9);
+        opacity: 0.65;
+    }
+
+    to {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+/* Cloud Movement */
+
+body.cloudy::before {
+    width: 350px;
+    height: 220px;
+
+    background: radial-gradient(
+        ellipse,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(255, 255, 255, 0.45) 45%,
+        transparent 75%
+    );
+
+    filter: blur(30px);
+    opacity: 0.8;
+
+    animation: cloudMovement 9s ease-in-out infinite alternate;
+}
+
+body.cloudy::after {
+    width: 400px;
+    height: 250px;
+
+    background: radial-gradient(
+        ellipse,
+        rgba(210, 225, 235, 0.9) 0%,
+        rgba(210, 225, 235, 0.3) 55%,
+        transparent 75%
+    );
+
+    filter: blur(35px);
+
+    animation: cloudMovement 13s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes cloudMovement {
+    from {
+        transform: translateX(-35px) translateY(0);
+    }
+
+    to {
+        transform: translateX(45px) translateY(20px);
+    }
+}
+
+/* Rain Glow */
+
+body.rainy::before {
+    background: radial-gradient(
+        circle,
+        rgba(190, 220, 240, 0.35),
+        transparent 70%
+    );
+
+    filter: blur(35px);
+    animation: rainGlow 5s ease-in-out infinite alternate;
+}
+
+@keyframes rainGlow {
+    from {
+        transform: translateY(-10px);
+        opacity: 0.4;
+    }
+
+    to {
+        transform: translateY(20px);
+        opacity: 0.8;
+    }
+}
+
+/* Snow Glow */
+
+body.snowy::before {
+    background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.9),
+        rgba(210, 240, 255, 0.3),
+        transparent 70%
+    );
+
+    filter: blur(25px);
+    animation: snowGlow 5s ease-in-out infinite alternate;
+}
+
+@keyframes snowGlow {
+    from {
+        opacity: 0.4;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 0.9;
+        transform: scale(1.15);
+    }
+}
+
+/* =========================================
+   14. RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 480px) {
+
+    body {
+        padding: 15px;
+    }
+
+    .container {
+        width: 100%;
+        padding: 23px;
+    }
+
+    .header h1 {
+        font-size: 25px;
+    }
+
+    .search-box {
+        gap: 7px;
+    }
+
+    input {
+        font-size: 13px;
+        padding: 11px;
+    }
+
+    .main-weather {
+        gap: 12px;
+    }
+
+    .weather-icon {
+        font-size: 60px;
+    }
+
+    #temperature {
+        font-size: 43px;
+    }
+
+    #description {
+        font-size: 15px;
+    }
+
+    .temperature-range {
+        gap: 20px;
+    }
+
+    .location-heading h2 {
+        font-size: 20px;
+    }
+}
+
+/* =========================================
+   15. ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
